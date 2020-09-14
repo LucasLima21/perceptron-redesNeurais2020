@@ -11,6 +11,7 @@ class Neuron():
     def __init__(self, lr, low_limit, high_limit):
         # o ultimo valor aleatorio gerado será o Bias,
         # visto que x_0, de valor 1, será adicionado na ultima coluna
+        print(low_limit, high_limit)
         self.weightArray = weightArray=np.random.uniform(low_limit, high_limit, 3)
         self.learningRate = lr
         self.epoch = 0
@@ -22,6 +23,9 @@ class Neuron():
         if(expectValue != obtainedValue):
             self.fitCountWeight+=1
             self.changedWeight = 1
+            print(expectValue)
+            print(obtainedValue)
+            print(input_)
             auxData = (self.learningRate*(expectValue - obtainedValue))*input_
             self.weightArray = self.weightArray + auxData
             
@@ -46,7 +50,16 @@ class Neuron():
                     self.updateWeightArray(arrayY[j], self.calculateActivation(arrayX[j]), arrayX[j])
                 self.epoch += 1
             
-                
+    def run100epochs(self, arrayX, arrayY):
+        response = []
+        while(self.epoch < 100):
+            self.changedWeight = 0
+            for i in range(len(arrayX)):
+                print(arrayX[i])
+                self.updateWeightArray(arrayY[i], self.calculateActivation(arrayX[i]), arrayX[i])
+            self.epoch += 1
+            response.append([self.fitCountWeight, self.weightArray])
+        return response
             
             
         
