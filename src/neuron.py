@@ -8,7 +8,7 @@ Alunos:
 
 import numpy as np
 class Neuron():
-    def __init__(self, lr, low_limit, high_limit):
+    def __init__(self, lr=0, low_limit=0, high_limit=0):
         # o ultimo valor aleatorio gerado será o Bias,
         # visto que x_0, de valor 1, será adicionado na ultima coluna
         self.weightArray = np.random.uniform(low_limit, high_limit, 3)
@@ -44,9 +44,10 @@ class Neuron():
     def iteratedFit(self, arrayX, arrayY, iteration):
         epochArray = []
         fitArray = []
-        for i in range(2):
-            self.fit(arrayX, arrayY)
+        for i in range(iteration):
             self.weightArray = np.random.uniform(self.low_limit, self.high_limit, 3)
+            self.fit(arrayX, arrayY)
+            self.changedWeight = 1
             epochArray.append(self.epoch)
             fitArray.append(self.fitCountWeight)
             self.epoch = 0
