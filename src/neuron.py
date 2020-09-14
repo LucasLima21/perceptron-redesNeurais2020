@@ -47,12 +47,12 @@ class Neuron():
                 self.epoch += 1
             
     def run100epochs(self, arrayX, arrayY):
+        p = np.random.permutation(len(arrayX))
+        arrayX, arrayY = arrayX[p], arrayY[p]
         while(self.epoch < 100):
-            self.changedWeight = 0
             for i in range(len(arrayX)):
-                   self.updateWeightArray(arrayY[i], self.calculateActivation(arrayX[i]), arrayX[i])
+                self.updateWeightArray(arrayY[i], self.calculateActivation(arrayX[i]), arrayX[i])
             self.epoch += 1
-            print()
      
     def predict(self,X):
         ret = []
@@ -60,5 +60,4 @@ class Neuron():
         for x in X:
             ret.append(self.calculateActivation(x))
         return ret
-    
     
