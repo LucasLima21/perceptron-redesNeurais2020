@@ -1,6 +1,16 @@
+"""
+Alunos:
+    David Cardoso Yonekura
+    Lucas da Silva Lima
+    Rafael Barbosa de Carvalho
+
+"""
+
 import numpy as np
 class Neuron():
-    def __init__(self, lr=0.1, low_limit=-0.5, high_limit=0.5):
+    def __init__(self, lr, low_limit, high_limit):
+        # o ultimo valor aleatorio gerado será o Bias,
+        # visto que x_0, de valor 1, será adicionado na ultima coluna
         self.weightArray = weightArray=np.random.uniform(low_limit, high_limit, 3)
         self.learningRate = lr
         self.epoch = 0
@@ -27,9 +37,24 @@ class Neuron():
                 self.updateWeightArray(arrayY[i], self.calculateActivation(arrayX[i]), arrayX[i])
             self.epoch += 1
             
+            
+    def iteratedFit(self, arrayX, arrayY, iteration):
+        for i in range(iteration):
+            if(self.changedWeight == 1):
+                self.changedWeight = 0  
+                for j in range(len(arrayX)):
+                    self.updateWeightArray(arrayY[j], self.calculateActivation(arrayX[j]), arrayX[j])
+                self.epoch += 1
+            
+                
+            
+            
+        
     def predict(self,X):
         ret = []
         X = np.insert(X, 2, 1, axis=1)
         for x in X:
             ret.append(self.calculateActivation(x))
         return ret
+    
+    
