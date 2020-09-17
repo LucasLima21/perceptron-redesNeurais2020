@@ -7,6 +7,7 @@ Alunos:
 """
 
 import numpy as np
+
 class Neuron():
     def __init__(self, lr=0, low_limit=0, high_limit=0):
         # o ultimo valor aleatorio gerado será o Bias,
@@ -19,6 +20,7 @@ class Neuron():
         self.fitCountWeight = 0
         self.changedWeight = 1
         self.fitCountEpoch = []
+        self.auxCountWeight = 0
         
     def updateWeightArray_print(self, expectValue, obtainedValue, input_):
         # função adicionada para que seja mostrada cada alteração do vetor
@@ -26,6 +28,7 @@ class Neuron():
         # que utiliza da função updateWeightArray
         if(expectValue != obtainedValue):
             self.fitCountWeight+=1
+            self.auxCountWeight+=1
             self.changedWeight = 1
             auxData = (self.learningRate*(expectValue - obtainedValue))*input_
             self.weightArray = self.weightArray + auxData
@@ -53,7 +56,8 @@ class Neuron():
             self.changedWeight = 0
             for i in range(len(arrayX)):
                 self.updateWeightArray_print(arrayY[i], self.calculateActivation(arrayX[i]), arrayX[i])
-            self.fitCountEpoch.append(self.fitCountWeight)
+            self.fitCountEpoch.append(self.auxCountWeight)
+            self.auxCountWeight = 0
             self.epoch += 1
         
     def fit(self, arrayX, arrayY):
@@ -93,4 +97,3 @@ class Neuron():
         for x in X:
             ret.append(self.calculateActivation(x))
         return ret
-    
