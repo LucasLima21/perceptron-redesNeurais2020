@@ -18,7 +18,19 @@ class Neuron():
         self.epoch = 0
         self.fitCountWeight = 0
         self.changedWeight = 1
+        self.fitCountEpoch = []
         
+    def updateWeightArray_print(self, expectValue, obtainedValue, input_):
+        # função adicionada para que seja mostrada cada alteração do vetor
+        # na parte 1 do projeto, feito desta maneira para nao interferir no resultado da parte 2
+        # que utiliza da função updateWeightArray
+        if(expectValue != obtainedValue):
+            self.fitCountWeight+=1
+            self.changedWeight = 1
+            auxData = (self.learningRate*(expectValue - obtainedValue))*input_
+            self.weightArray = self.weightArray + auxData
+            print("Vetor de pesos Alterado: ", self.weightArray)
+    
         
     
     def updateWeightArray(self, expectValue, obtainedValue, input_):
@@ -32,6 +44,17 @@ class Neuron():
         u = np.sum(input_ * self.weightArray)
         return 1 if u > 0 else 0
         
+        
+    def fit_print(self, arrayX, arrayY):
+        # função adicionada para que seja mostrada cada alteração do vetor
+        # na parte 1 do projeto, feito desta maneira para nao interferir no resultado da questão 2
+        # que utiliza da função fit
+        while(self.changedWeight == 1):
+            self.changedWeight = 0
+            for i in range(len(arrayX)):
+                self.updateWeightArray_print(arrayY[i], self.calculateActivation(arrayX[i]), arrayX[i])
+            self.fitCountEpoch.append(self.fitCountWeight)
+            self.epoch += 1
         
     def fit(self, arrayX, arrayY):
         while(self.changedWeight == 1):
